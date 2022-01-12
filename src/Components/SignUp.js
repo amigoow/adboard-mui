@@ -44,17 +44,9 @@ export default function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [mobileno, setMobile] = useState("");
-    const [message, setMessage] = useState("");
-    const [selectedFiles, setSelectedFiles] = useState([]);
-
-    const handleImageChange = (e) => {
-        // console.log(e.target.files[])
-        if (e.target.files) {
-          const filesArray = Array.from(e.target.files).map((file) =>
-            URL.createObjectURL(file)
-          );
-        }
-    }
+    // const [message, setMessage] = useState("");
+    const [file, setSelectedFiles] = useState("");
+    
     const theme = createTheme();
 
     const submitForm = (e) => {
@@ -66,8 +58,8 @@ export default function SignUp() {
                 email: email,
                 password: password,
                 mobileno: mobileno,
-                currency: currency
-
+                currency: currency,
+                file:file
             }),
 
         });
@@ -77,13 +69,15 @@ export default function SignUp() {
             password: password,
             mobileno: mobileno,
             currency: currency,
+            file:file
         }
         console.log(myForm);
         setName("");
         setEmail("");
         setMobile("");
         setPassword("");
-        setMessage("Successfully Form Submitted");
+        setSelectedFiles("");
+        // setMessage("Successfully Form Submitted");
 
         //  console.log(name, email, mobileno);
 
@@ -198,7 +192,8 @@ export default function SignUp() {
                                     type="file"
                                     name="file"
                                     style={{ marginTop: '20px' }}
-                                    onChange={handleImageChange}
+                                    value={file}
+                                    onChange={(e)=>setSelectedFiles(e.target.value)}
                                     multiple
                                 />
 
@@ -212,7 +207,7 @@ export default function SignUp() {
                                 >
                                     Sign Up
                                 </Button>
-                                <div className="message">{message ? <p style={{ color: "green" }}>{message}</p> : null}</div>
+                                {/* <div className="message">{message ? <p style={{ color: "green" }}>{message}</p> : null}</div> */}
 
                                 {/* <input type="submit" value="Submit" variant="contained" */}
 
