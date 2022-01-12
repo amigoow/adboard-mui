@@ -37,11 +37,18 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         flexGrow: 1,
     },
+    paginationCenter:{
+        paddingTop: theme.spacing(8),
+
+    }
 
 }));
 
 
 function Cards() {
+
+    // const [page, setPage] = useState(1);
+   
     const [mydata, setmydata] = useState([]);
 
     const getdata = async () => {
@@ -57,15 +64,15 @@ function Cards() {
     return (
         <>
             <CssBaseline />
-            <Container className={classes.cardGrid} maxWidth="md">
+            <Container className={classes.cardGrid} maxWidth="md" id="cards">
                 <Grid container spacing={4}>
                     <Router>
                         {
                             mydata.map((curEle) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4}>
-                                        <Link target="_blank" to={'/card-details/' + curEle.id} style={{ textDecoration: 'none' }}>
-                                            <Card className={classes.card} key={curEle.id}>
+                                    <Grid item xs={12} sm={6} md={4} key={curEle.id}>
+                                        <Link target="_blank" to={'/card-details/' + curEle.id} style={{ textDecoration: 'none' }} >
+                                            <Card className={classes.card}>
                                                 <CardMedia
                                                     className={classes.cardMedia}
                                                     image="https://source.unsplash.com/random"
@@ -93,9 +100,8 @@ function Cards() {
                             })
 
                         }
-                        <Route path="/card-details/:id" target="_blank"><CardDetails /></Route>
+                        <Route path="/card-details/:id" ><CardDetails /></Route>
                     </Router>
-
                 </Grid>
             </Container>
         </>

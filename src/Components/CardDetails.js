@@ -39,7 +39,7 @@ function CardDetails() {
     if (product) {
         return (
             content =
-            <Container>
+            <Container id="details">
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <img src="https://source.unsplash.com/random" alt="..." className={classes.myImg} />

@@ -57,12 +57,14 @@ function Appbar() {
       <Route path="/">
                 <Home />
             </Route>
-            <Route  path="/cards">
+            <Route  path="/cards/">
                 <Cards/>
             </Route>
-            <Route  path="/card-details/:id/">
+            <Route  path="/card-details/:id">
                 <CardDetails/>
             </Route>
+           
+
       </Router>
       
     )
