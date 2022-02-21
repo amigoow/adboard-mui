@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from '../Components/SignUp';
+import SlideShow from '../Components/SlideShow';
+
 
 import {
   Route,
@@ -19,54 +21,54 @@ export default function Home() {
       paddingTop: theme.spacing(5),
     },
     featureImage: {
-      backgroundImage: `url(${"https://source.unsplash.com/random"})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
+      // backgroundImage: `url(${"https://source.unsplash.com/random"})`,
+      // backgroundRepeat: 'no-repeat',
+      // backgroundSize: 'cover',
+      backgroundColor:'#b1b1e2',
       opacity: '1',
       color: 'white',
       fontWeight: '800',
+      paddingTop:'30'
     },
 
   }));
   const classes = useStyles();
   return (
     <>
+    <SlideShow/>
       <Box
-        sx={{
-          bgcolor: 'background.paper',
-          pt: 8,
-          pb: 6,
-        }
-        }
         className={classes.featureImage}
       >
         <Container maxWidth="sm">
           <Typography
-            component="h1"
-            variant="h2"
+            component="h3"
+            variant="h4"
+            spacing={2}
             align="center"
-            fontWeight="bold"
-            gutterBottom
-          >
-            Welcome
+            padding={3}
+          > 
+            Register Now
           </Typography>
-          <Typography variant="h3" align="center" fontWeight="bold"
-
-          >
-            Learning React with Material UI
+          <Typography
+            component="p"
+            spacing={2}
+            align="center"
+            paddingBottom={3}
+          > 
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, maiores excepturi beatae, odit numquam soluta doloribus
+           quidem rerum consequuntur vitae architecto aut molestias officia in, est accusamus iure tempora dolor.
           </Typography>
           <Stack
-            sx={{ pt: 4 }}
             direction="row"
             spacing={2}
             justifyContent="center"
             color="primary"
           >
             <Link to="/signup/" style={{textDecoration:'none'}}>
-              <Button variant="contained">Contact Us</Button>
+              <Button variant="contained" spacing={3}>Contact Us</Button>
             </Link>
-
           </Stack>
+          <br/>
         </Container>
       </Box>
       <Container>
