@@ -6,15 +6,13 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 import Cards from '../Components/Cards.js';
 import Home from '../Components/Home.js';
 import CardDetails from '../Components/CardDetails';
+import Login from '../Components/Login.js';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 import {
     BrowserRouter as Router,
     Route,
     Link
 } from "react-router-dom";
-
 
 function Appbar() {
     const useStyles = makeStyles((theme) => ({
@@ -51,10 +49,12 @@ function Appbar() {
           <div className={classes.navlinks}>
           <Link to="/" className={classes.link}>Home</Link>
           <Link to="/cards" className={classes.link}>Cards</Link>
+          <Link to="/login" className={classes.link}>Login</Link>
+
           </div>
         </Toolbar>
       </AppBar>
-      <Route path="/">
+            <Route path="/">
                 <Home />
             </Route>
             <Route  path="/cards/">
@@ -62,6 +62,9 @@ function Appbar() {
             </Route>
             <Route  path="/card-details/:id">
                 <CardDetails/>
+            </Route>
+            <Route  path="/login/">
+                <Login/>
             </Route>
            
 

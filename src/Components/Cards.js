@@ -46,11 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Cards() {
-
-    // const [page, setPage] = useState(1);
-   
     const [mydata, setmydata] = useState([]);
-
     const getdata = async () => {
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
         setmydata(await response.json());

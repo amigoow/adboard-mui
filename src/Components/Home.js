@@ -7,8 +7,6 @@ import Container from '@mui/material/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from '../Components/SignUp';
 import SlideShow from '../Components/SlideShow';
-
-
 import {
   Route,
   Link
@@ -65,7 +63,7 @@ export default function Home() {
             color="primary"
           >
             <Link to="/signup/" style={{textDecoration:'none'}}>
-              <Button variant="contained" spacing={3}>Contact Us</Button>
+              <Button variant="contained" spacing={3}>Register Now</Button>
             </Link>
           </Stack>
           <br/>
