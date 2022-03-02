@@ -23,8 +23,9 @@ function CardDetails() {
     }));
     const classes = useStyles();
 
-    const { id } = useParams();
-    const url = `https://jsonplaceholder.typicode.com/users/${id}`;
+    const { id }    = useParams();
+    const endpoint  = 'http://10.1.4.205:8085/';
+    const url       = endpoint + `/api/Noticeboard/Advertisment?id=${id}`;
 
     const [product, setproduct] = useState(null);
 
@@ -42,12 +43,18 @@ function CardDetails() {
             <Container id="details">
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
-                        <img src="https://source.unsplash.com/random" alt="..." className={classes.myImg} />
+                        <img src={ endpoint + get_image(product.Images) } alt="..." className={classes.myImg} />
                     </Grid>
                     <Grid className={classes.contentCenter} item xs={4}>
-                        <h2>Email:</h2><p>{product.email}</p>
-                        <h2>Name:</h2><p>{product.name}</p>
-                        <h2>Phone#:</h2><p>{product.phone}</p>
+                        
+                        {/* <h2>Email:</h2><p>{product.email}</p> */}
+                        <h2>Name:</h2><p>{product.CreatedBy}</p>
+                        {/* <h2>Phone#:</h2><p>{product.phone}</p> */}
+                        {/* <h2>PNumber:</h2><p>{product.PNumber}</p> */}
+                        <h2>Detail:</h2><p>{product.Detail}</p>
+                        <h2>Remarks:</h2><p>{product.Remarks}</p>
+                        <h2>CreatedDate:</h2><p>{product.CreatedDate}</p>
+                        
                         {/* <p>{url}</p> */}
                     </Grid>
 
@@ -65,3 +72,11 @@ function CardDetails() {
 }
 
 export default withRouter(CardDetails);
+
+function get_image ( el ) {
+    for ( var e in el ) {
+        if ( el[e].IsMainImage == "Y" ) {
+            return el[e].Path;
+        }
+    }
+}

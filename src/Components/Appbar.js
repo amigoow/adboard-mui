@@ -44,11 +44,11 @@ function Appbar() {
         <Toolbar>
           <AcUnitIcon/>
           <Typography variant="h6" color="inherit" noWrap>
-            React Website
+            PNRA Notice Board
           </Typography>
           <div className={classes.navlinks}>
           <Link to="/" className={classes.link}>Home</Link>
-          <Link to="/cards" className={classes.link}>Cards</Link>
+          <Link to="/cards" className={classes.link}>Ads</Link>
           <Link to="/login" className={classes.link}>Login</Link>
 
           </div>

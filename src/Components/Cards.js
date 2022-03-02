@@ -7,11 +7,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-//import Link from '@material-ui/core/Link';
 import CardDetails from '../Components/CardDetails';
+
 import {
     BrowserRouter as Router,
     Route,
@@ -47,8 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Cards() {
     const [mydata, setmydata] = useState([]);
+    const endpoint = 'http://10.1.4.205:8085/';
     const getdata = async () => {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const response = await fetch( endpoint + 'api/Noticeboard/Advertisments');
         setmydata(await response.json());
     }
 
@@ -61,26 +63,51 @@ function Cards() {
         <>
             <CssBaseline />
             <Container className={classes.cardGrid} maxWidth="md" id="cards">
+                <Typography
+                component="h5"
+                variant="h4"
+                spacing={4}
+                align="center"
+                padding={5}
+                
+            > 
+            Ads Listings
+            </Typography>
+            
                 <Grid container spacing={4}>
                     <Router>
                         {
                             mydata.map((curEle) => {
                                 return (
-                                    <Grid item xs={12} sm={6} md={4} key={curEle.id}>
-                                        <Link target="_blank" to={'/card-details/' + curEle.id} style={{ textDecoration: 'none' }} >
+                                    
+                                    <Grid item xs={12} sm={6} md={4} key={curEle.Id}>
+                                        <Link target="_blank" to={'/card-details/' + curEle.Id} style={{ textDecoration: 'none' }} >
                                             <Card className={classes.card}>
                                                 <CardMedia
                                                     className={classes.cardMedia}
-                                                    image="https://source.unsplash.com/random"
+                                                    image= { endpoint + get_image(curEle.Images) }
                                                     title="Image title"
                                                 />
                                                 <CardContent className={classes.cardContent}>
                                                     <Typography gutterBottom variant="h5" component="h2">
-                                                        {curEle.name}
+                                                        {curEle.Detail}
                                                     </Typography>
                                                     <Typography>
-                                                        {curEle.email}
+                                                       
+                                                        <strong>Posted By: </strong> 
+                                                         {curEle.CreatedBy}
                                                     </Typography>
+                                                    <Typography>
+                                                        <strong>Remarks: </strong> 
+                                                         {curEle.Remarks}
+                                                    </Typography>
+                                                    <Typography>
+                                                        <strong>Date: </strong> 
+                                                         {curEle.CreatedDate}
+                                                    </Typography>
+                                                    <Avatar alt="curEle.CreatedBy" src="/broken" >
+                                                        {curEle.CreatedBy.charAt(0)}  
+                                                    </Avatar>
                                                 </CardContent>
                                                 <CardActions>
                                                     <Button size="small" color="primary" variant="contained" >
@@ -104,6 +131,53 @@ function Cards() {
     )
 }
 export default Cards
+
+function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+}
+
+function stringToColor(string) {
+    let hash = 0;
+    let i;
+  
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+  
+    let color = '#';
+  
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.substr(-2);
+    }
+    /* eslint-enable no-bitwise */
+  
+    return color;
+}
+
+function get_image ( el ) {
+    for ( var e in el ) {
+        if ( el[e].IsMainImage == "Y" ) {
+            return el[e].Path;
+        }
+    }
+}
+
+function get_date ( date ) {
+   
+   var d = new Date(date);
+    
+   var dd = d.getDay + '-' + d.getMonth + '-' + d.getFullYear;
+    
+   return dd;
+    
+}
 
 /* {cards.map((card) => (
                         <Grid item key={card} xs={12} sm={6} md={4}>

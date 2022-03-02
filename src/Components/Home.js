@@ -18,57 +18,23 @@ export default function Home() {
       textAlign: 'center',
       paddingTop: theme.spacing(5),
     },
-    featureImage: {
-      // backgroundImage: `url(${"https://source.unsplash.com/random"})`,
-      // backgroundRepeat: 'no-repeat',
-      // backgroundSize: 'cover',
-      backgroundColor:'#b1b1e2',
-      opacity: '1',
-      color: 'white',
-      fontWeight: '800',
-      paddingTop:'30'
-    },
+    // featureImage: {
+    //   backgroundImage: 'url(${"https://source.unsplash.com/random"})',
+    //   backgroundRepeat: 'no-repeat',
+    //   backgroundSize: 'cover',
+    //   backgroundColor:'#b1b1e2',
+    //   opacity: '1',
+    //   color: 'white',
+    //   fontWeight: '800',
+    //   paddingTop:'30'
+    // },
 
   }));
   const classes = useStyles();
   return (
     <>
     <SlideShow/>
-      <Box
-        className={classes.featureImage}
-      >
-        <Container maxWidth="sm">
-          <Typography
-            component="h3"
-            variant="h4"
-            spacing={2}
-            align="center"
-            padding={3}
-          > 
-            Register Now
-          </Typography>
-          <Typography
-            component="p"
-            spacing={2}
-            align="center"
-            paddingBottom={3}
-          > 
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, maiores excepturi beatae, odit numquam soluta doloribus
-           quidem rerum consequuntur vitae architecto aut molestias officia in, est accusamus iure tempora dolor.
-          </Typography>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-            color="primary"
-          >
-            <Link to="/signup/" style={{textDecoration:'none'}}>
-              <Button variant="contained" spacing={3}>Register Now</Button>
-            </Link>
-          </Stack>
-          <br/>
-        </Container>
-      </Box>
+      
       <Container>
           <Route path="/signup/">
             <SignUp/>

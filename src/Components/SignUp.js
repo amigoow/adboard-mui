@@ -20,68 +20,85 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function SignUp() {
 
-    const currencies = [
+    const selectPublishedStatus = [
+       
         {
-            value: 'USD',
-            label: '$',
+            value: 'T',
+            label: 'Published',
         },
         {
-            value: 'EUR',
-            label: '€',
-        },
-        {
-            value: 'BTC',
-            label: '฿',
-        },
-        {
-            value: 'JPY',
-            label: '¥',
-        },
+            value: 'F',
+            label: 'Deferred',
+        }
     ];
-    const [currency, setCurrency] = useState('USD');
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [mobileno, setMobile] = useState("");
-    // const [message, setMessage] = useState("");
-    const [file, setSelectedFiles] = useState("");
+    setPnumber("");
+    setPname("");
+    setDetail("");
+    setEmergencyStatus("");
+    setPublishedStatus("");
+    setOfficialStatus("");
+    setCreatedBy("");
+    setRemarks("");
+    setItemValue("");
+    setMobile("");
+    setEmail("");
+    setSelectedFiles("");
+
+    const [pnumber, setPnumber]                 = useState("");
+    const [pname, setPname]                     = useState("");
+    const [detail, setDetail]                   = useState("");
+    const [EmergencyStatus, setEmergencyStatus]     = useState("T");
+    const [PublishedStatus, setPublishedStatus]     = useState("T");
+    const [OfficialStatus, setOfficialStatus]       = useState("T");
+    const [createdBy, setCreatedBy]             = useState("");
+    const [remarks, setRemarks]                 = useState("");
+    const [itemValue, setItemValue]             = useState("");
+    const [mobileno, setMobile]                   = useState("");
+    const [email, setEmail]                     = useState("");
+    const [file, setSelectedFiles]              = useState("");
+
+    
     
     const theme = createTheme();
 
     const submitForm = (e) => {
         e.preventDefault();
-        let res = fetch("https://jsonplaceholder.typicode.com/users", {
+        let res = fetch("http://10.1.4.205:8085/api/Noticeboard/CreatAdvertisment", {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-                mobileno: mobileno,
-                currency: currency,
-                file:file
+                pname:              pname,
+                Detail:             detail,
+                EmergencyStatus:    EmergencyStatus,
+                PublishedStatus:    PublishedStatus,
+                OfficialStatus:     OfficialStatus,
+                CreatedBy:          createdBy,
+                Remarks:            remarks,
+                ItemValue:          itemValue,
+                mobileno:           mobileno,
+                email:              email,
+                images:             null,
+                MainImage:          file
             }),
 
         });
-        const myForm = {
-            name: name,
-            email: email,
-            password: password,
-            mobileno: mobileno,
-            currency: currency,
-            file:file
-        }
-        console.log(myForm);
-        setName("");
-        setEmail("");
+        
+        setPnumber("");
+        setPname("");
+        setDetail("");
+        setEmergencyStatus("");
+        setPublishedStatus("");
+        setOfficialStatus("");
+        setCreatedBy("");
+        setRemarks("");
+        setItemValue("");
         setMobile("");
-        setPassword("");
+        setEmail("");
         setSelectedFiles("");
-        // setMessage("Successfully Form Submitted");
-
-        //  console.log(name, email, mobileno);
-
-        // postForm(name,email,mobileno);
     }
 
     return (
@@ -107,38 +124,153 @@ export default function SignUp() {
                             <LockOpenIcon />
                         </Avatar>
                     </Stack>
-                    <Typography variant="h5" align="center" fontWeight="bold">Sign Up</Typography>
+                    <Typography variant="h5" align="center" fontWeight="bold">Post an Ad</Typography>
 
                     <Grid container spacing={3}>
                         <Grid item sm={12}>
 
                             <form onSubmit={submitForm}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="pname"
+                                    label="P Number"
+                                    name="pname"
+                                    value={pnumber}
+                                    onChange={(e) => setPnumber(e.target.value)}
+                                    autoFocus
+                                    style={{ marginTop: '20px' }}
+
+                                />
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="detail"
+                                    label="Detail"
+                                    name="detail"
+                                    value={pnumber}
+                                    onChange={(e) => setDetail(e.target.value)}
+                                    autoFocus
+                                    style={{ marginTop: '20px' }}
+
+                                />
+
+                                <TextField
+                                    id="EmergencyStatus"
+                                    fullWidth
+                                    select
+                                    name="emergencyStat"
+                                    label="Select"
+                                    value={EmergencyStatus}
+                                    helperText="Please select Ad Status"
+                                    onChange={(e) => setEmergencyStatus(e.target.value)}
+                                    style={{ marginTop: '20px' }}
+
+                                >
+                                    {selectPublishedStatus.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
+                                <TextField
+                                    id="PublishedStatus"
+                                    fullWidth
+                                    select
+                                    name="publishedStat"
+                                    label="Select"
+                                    value={PublishedStatus}
+                                    helperText="Please select Ad Status"
+                                    onChange={(e) => setPublishedStatus(e.target.value)}
+                                    style={{ marginTop: '20px' }}
+
+                                >
+                                    {selectPublishedStatus.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
+                                <TextField
+                                    id="OfficialStatus"
+                                    fullWidth
+                                    select
+                                    name="officialStat"
+                                    label="Select"
+                                    value={OfficialStatus}
+                                    helperText="Please select Ad Status"
+                                    onChange={(e) => setOfficialStatus(e.target.value)}
+                                    style={{ marginTop: '20px' }}
+
+                                >
+                                    {selectPublishedStatus.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
 
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="createdBy"
                                     required
                                     fullWidth
-                                    id="name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    label="First Name"
+                                    id="createdBy"
+                                    value={createdBy}
+                                    onChange={(e) => setCreatedBy(e.target.value)}
+                                    label="Full Name"
                                     autoFocus
                                     style={{ marginTop: '20px' }}
 
                                 />
+
                                 <TextField
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    fullWidth
-                                    name="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    autoComplete="remarks"
+                                    name="remarks"
                                     required
+                                    fullWidth
+                                    id="remarks"
+                                    value={remarks}
+                                    onChange={(e) => setRemarks(e.target.value)}
+                                    label="remarks"
                                     autoFocus
                                     style={{ marginTop: '20px' }}
+
                                 />
+
+                                <TextField
+                                    autoComplete="ItemValue"
+                                    name="itemValue"
+                                    required
+                                    fullWidth
+                                    id="itemValue"
+                                    value={itemValue}
+                                    onChange={(e) => setItemValue(e.target.value)}
+                                    label="Item Value"
+                                    autoFocus
+                                    style={{ marginTop: '20px' }}
+
+                                />
+
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="mobile"
+                                    type="number"
+                                    label="mobile"
+                                    name="mobile"
+                                    value={mobileno}
+                                    onChange={(e) => setMobile(e.target.value)}
+                                    autoComplete="mobile"
+                                    autoFocus
+                                    style={{ marginTop: '20px' }}
+
+
+                                />
+                                
 
                                 <TextField
                                     required
@@ -152,39 +284,7 @@ export default function SignUp() {
                                     style={{ marginTop: '20px' }}
 
                                 />
-                                <TextField
-                                    id="currency"
-                                    fullWidth
-                                    select
-                                    label="Select"
-                                    value={currency}
-                                    helperText="Please select your currency"
-                                    onChange={(e) => setCurrency(e.target.value)}
-                                    style={{ marginTop: '20px' }}
 
-                                >
-                                    {currencies.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="mobileno"
-                                    type="number"
-                                    label="Mobile Number"
-                                    name="mobileno"
-                                    value={mobileno}
-                                    onChange={(e) => setMobile(e.target.value)}
-                                    autoComplete="mobileno"
-                                    autoFocus
-                                    style={{ marginTop: '20px' }}
-
-
-                                />
 
                                 <TextField
                                     fullWidth
@@ -193,7 +293,7 @@ export default function SignUp() {
                                     name="file"
                                     style={{ marginTop: '20px' }}
                                     value={file}
-                                    onChange={(e)=>setSelectedFiles(e.target.value)}
+                                    onChange={(e) => setSelectedFiles(e.target.value)}
                                     multiple
                                 />
 
