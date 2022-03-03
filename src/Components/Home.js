@@ -7,6 +7,8 @@ import Container from '@mui/material/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from '../Components/SignUp';
 import SlideShow from '../Components/SlideShow';
+import UploadFile from '../Components/UploadFile';
+
 import {
   Route,
   Link
@@ -36,9 +38,11 @@ export default function Home() {
     <SlideShow/>
       
       <Container>
-          <Route path="/signup/">
+          {/* <Route path="/signup/">
             <SignUp/>
-          </Route>
+          </Route> */}
+          {/* <SignUp/> */}
+          <UploadFile/>
           {/* <OwlCarousal /> */}
           
 
