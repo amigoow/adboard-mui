@@ -17,24 +17,34 @@ export default function Login() {
     const [password, setPassword] = useState("");;
     
     const theme = createTheme();
-
+    
     const submitForm = (e) => {
         e.preventDefault();
-        let res = fetch("https://jsonplaceholder.typicode.com/users", {
+        let res = fetch("http://10.1.4.205:8085/api/Noticeboard/CheckIsValidUser", {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
-                email: email,
-                password: password,
+                P_NO: email,
+                Password: password,
 
             }),
 
-        });
+        }).then(
+            (response) => {
+                if ( response ) {
+                    sessionStorage.setItem('token', JSON.stringify(email));
+                    window.location.href = "/signup";
+                }
+            }
+        )
         const login = {
             email: email,
             password: password
         }
         console.log(login);
-        setEmail("");
         setPassword("");
         // setMessage("Successfully Form Submitted");
 
@@ -66,7 +76,8 @@ export default function Login() {
                             <LockOpenIcon />
                         </Avatar>
                     </Stack>
-                    <Typography variant="h5" align="center" fontWeight="bold">Login</Typography>
+                    <Typography variant="h4" align="center" fontWeight="bold">Login</Typography>
+                    <Typography variant="h6" align="center" fontWeight="bold">Please use your MIS login details</Typography>
 
                     <Grid container spacing={3}>
                         <Grid item sm={12}>
@@ -76,7 +87,7 @@ export default function Login() {
                                         required
                                         fullWidth
                                         id="email"
-                                        label="Email Address"
+                                        label="P Number"
                                         name="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -118,4 +129,10 @@ export default function Login() {
             </Container>
         </ThemeProvider>
     )
+}
+
+function getToken() {
+    const tokenString = sessionStorage.getItem('token');
+    const userToken = JSON.parse(tokenString);
+    return userToken?.token
 }

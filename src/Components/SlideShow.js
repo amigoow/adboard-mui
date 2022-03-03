@@ -29,14 +29,25 @@ const Slideshow = () => {
 
     return (
        
-            <Box  style={{ 'backgroundColor': `#ccc` }} >
+            <Box  style={{ 'backgroundColor': `#cbe5ff` }} >
                 <div>
+                <div class='ripple-background'>
+                    <div class='circle xxlarge shade1'></div>
+                    <div class='circle xlarge shade2'></div>
+                    <div class='circle large shade3'></div>
+                    <div class='circle mediun shade4'></div>
+                    <div class='circle small shade5'></div>
+                    </div>
             <Slide easing="ease">
+            
                 <div className="each-slide">
+                    
+
                     <div style={{ 'backgroundImage': `url(${slideImages[0]})` }} className={classes.featureImage}
                     >
 
                         <Container maxWidth="sm">
+                        
 
                         <Typography
                             component="h3"
@@ -46,7 +57,43 @@ const Slideshow = () => {
                             padding={3}
                             
                         > 
-                            Welcome to PNRA Notice Board
+                            Welcome to PNRA Ads
+                        </Typography>
+                            <Stack
+                                direction="row"
+                                spacing={2}
+                                justifyContent="center"
+                                
+                                
+                            >
+                                <Link href="/cards">
+                                   View all Ads here
+                                </Link>
+                            </Stack>
+
+
+                        </Container>
+                    </div>
+                </div>
+
+                <div className="each-slide">
+                    
+
+                    <div style={{ 'backgroundImage': `url(${slideImages[0]})` }} className={classes.featureImage}
+                    >
+
+                        <Container maxWidth="sm">
+                        
+
+                        <Typography
+                            component="h3"
+                            variant="h4"
+                            spacing={2}
+                            align="center"
+                            padding={3}
+                            
+                        > 
+                            Integrated with MIS
                         </Typography>
                             <Stack
                                 direction="row"

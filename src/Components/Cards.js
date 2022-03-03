@@ -10,8 +10,9 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Grow from '@mui/material/Grow';
 import CardDetails from '../Components/CardDetails';
+import notfound from '../notfound.png'; 
 
 import {
     BrowserRouter as Router,
@@ -85,7 +86,7 @@ function Cards() {
                                             <Card className={classes.card}>
                                                 <CardMedia
                                                     className={classes.cardMedia}
-                                                    image= { endpoint + get_image(curEle.Images) }
+                                                    image= {  get_image(curEle.Images) }
                                                     title="Image title"
                                                 />
                                                 <CardContent className={classes.cardContent}>
@@ -162,11 +163,15 @@ function stringToColor(string) {
 }
 
 function get_image ( el ) {
+    
     for ( var e in el ) {
+        const endpoint = 'http://10.1.4.205:8085/';
         if ( el[e].IsMainImage == "Y" ) {
-            return el[e].Path;
+            return endpoint + el[e].Path;
         }
     }
+
+    return notfound;
 }
 
 function get_date ( date ) {

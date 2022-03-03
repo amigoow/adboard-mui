@@ -7,6 +7,7 @@ import Cards from '../Components/Cards.js';
 import Home from '../Components/Home.js';
 import CardDetails from '../Components/CardDetails';
 import Login from '../Components/Login.js';
+import Logout from '../Components/Logout.js';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     BrowserRouter as Router,
@@ -42,14 +43,24 @@ function Appbar() {
         <Router>
         <AppBar position="relative">
         <Toolbar>
-          <AcUnitIcon/>
+          {/* <AcUnitIcon/> */}
           <Typography variant="h6" color="inherit" noWrap>
-            PNRA Notice Board
+            PNRA Ads
           </Typography>
           <div className={classes.navlinks}>
           <Link to="/" className={classes.link}>Home</Link>
           <Link to="/cards" className={classes.link}>Ads</Link>
-          <Link to="/login" className={classes.link}>Login</Link>
+
+            
+            <Link to="/signup" className={classes.link}>Post Ad</Link>
+
+            
+            <Link to={ ! getToken() ? '/login' : '/logout'  }  className={classes.link}>
+              
+              { ! getToken() ? 'Login' : 'Logout'  }
+              
+            </Link>
+
 
           </div>
         </Toolbar>
@@ -66,6 +77,9 @@ function Appbar() {
             <Route  path="/login/">
                 <Login/>
             </Route>
+            <Route  path="/logout/">
+                <Logout/>
+            </Route>
            
 
       </Router>
@@ -74,3 +88,8 @@ function Appbar() {
 }
 
 export default Appbar
+function getToken() {
+    const tokenString = sessionStorage.getItem('token');
+    const userToken = JSON.parse(tokenString);
+    return userToken;
+}

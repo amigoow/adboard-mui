@@ -12,13 +12,19 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@mui/material/Typography';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import Login from '../Components/Login';
 
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+function getToken() {
+    const tokenString = sessionStorage.getItem('token');
+    const userToken = JSON.parse(tokenString);
+    return userToken;
+}
 
 
 
 export default function SignUp() {
+    
 
     const selectPublishedStatus = [
        
@@ -32,18 +38,6 @@ export default function SignUp() {
         }
     ];
 
-    setPnumber("");
-    setPname("");
-    setDetail("");
-    setEmergencyStatus("");
-    setPublishedStatus("");
-    setOfficialStatus("");
-    setCreatedBy("");
-    setRemarks("");
-    setItemValue("");
-    setMobile("");
-    setEmail("");
-    setSelectedFiles("");
 
     const [pnumber, setPnumber]                 = useState("");
     const [pname, setPname]                     = useState("");
@@ -85,8 +79,16 @@ export default function SignUp() {
                 MainImage:          file
             }),
 
-        });
-        
+        }).then(
+            (response) => {
+                if ( response ) {
+                    alert("Your Ad has been posted!")
+                    sessionStorage.setItem('token', JSON.stringify(email));
+                    window.location.href = "/signup";
+                }
+            }
+        )
+
         setPnumber("");
         setPname("");
         setDetail("");
@@ -99,6 +101,13 @@ export default function SignUp() {
         setMobile("");
         setEmail("");
         setSelectedFiles("");
+    }
+
+    const token = getToken();
+  
+    if(!token) {
+        alert("You need to login first");
+      return <Login />
     }
 
     return (
@@ -148,7 +157,7 @@ export default function SignUp() {
                                     id="detail"
                                     label="Detail"
                                     name="detail"
-                                    value={pnumber}
+                                    value={detail}
                                     onChange={(e) => setDetail(e.target.value)}
                                     autoFocus
                                     style={{ marginTop: '20px' }}
@@ -305,7 +314,7 @@ export default function SignUp() {
                                     sx={{ mt: 3, mb: 2 }}
 
                                 >
-                                    Sign Up
+                                    Post Ad
                                 </Button>
                                 {/* <div className="message">{message ? <p style={{ color: "green" }}>{message}</p> : null}</div> */}
 
