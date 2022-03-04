@@ -13,34 +13,44 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getSuggestedQuery } from '@testing-library/react';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 const UploadFile = () => {
-  const [selectedFile, setSelectedFile] = React.useState(null);
 
   const selectPublishedStatus = [
     {
-      value: 'T',
+      value: 'P',
       label: 'Published',
     },
     {
-      value: 'F',
+      value: 'D',
       label: 'Deferred',
     }
   ];
 
-  const [pnumber, setPnumber] = useState("");
-  const [pname, setPname] = useState("");
+  const selectOfficialStatus = [
+    {
+      value: 'O',
+      label: 'Official',
+    },
+    {
+      value: 'C',
+      label: 'Caks',
+    }
+  ];
+
+  const [pnumber, setNumber] = useState("9875");
   const [detail, setDetail] = useState("");
-  const [EmergencyStatus, setEmergencyStatus] = useState("T");
-  const [PublishedStatus, setPublishedStatus] = useState("T");
-  const [OfficialStatus, setOfficialStatus] = useState("T");
-  const [createdBy, setCreatedBy] = useState("");
+  const [PublishedStatus, setPublishedStatus] = useState("P");
+  const [OfficialStatus, setOfficialStatus] = useState("O");
   const [remarks, setRemarks] = useState("");
   const [itemValue, setItemValue] = useState("");
-  const [mobileno, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [file, setSelectedFiles] = useState("");
   const theme = createTheme();
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [date, setDate] = React.useState(null);
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -54,41 +64,34 @@ const UploadFile = () => {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
         body: JSON.stringify({
-          pname: pname,
+          Number:pnumber,
           Detail: detail,
-          EmergencyStatus: EmergencyStatus,
           PublishedStatus: PublishedStatus,
           OfficialStatus: OfficialStatus,
-          CreatedBy: createdBy,
           Remarks: remarks,
           ItemValue: itemValue,
-          mobileno: mobileno,
-          email: email,
+          Date: date
         }),
       });
       const signup = {
-        pnumber: pnumber,
-        EmergencyStatus: EmergencyStatus,
+        Number:pnumber,
+        Detail: detail,
         PublishedStatus: PublishedStatus,
         OfficialStatus: OfficialStatus,
-        CreatedBy: createdBy,
         Remarks: remarks,
         ItemValue: itemValue,
-        mobileno: mobileno,
-        email: email,
+        Date: date
+
+
       }
       console.log(signup);
-
-      setPnumber("");
-      setEmergencyStatus("");
+      
+      setNumber(pnumber);
       setPublishedStatus("");
       setOfficialStatus("");
-      setCreatedBy("");
       setRemarks("");
       setItemValue("");
-      setMobile("");
-      setEmail("");
-      setSelectedFiles("");
+      setDate("");
 
     } catch (error) {
       console.log(error)
@@ -127,28 +130,41 @@ const UploadFile = () => {
             <Grid item sm={12}>
 
               <form onSubmit={handleSubmit}>
-                <TextField
+
+              <TextField
                   required
                   fullWidth
                   id="pnumber"
-                  label="P Number"
-                  name="pname"
-                  value={pname}
-                  onChange={(e) => setPnumber(e.target.value)}
+                  label="P.No#"
+                  name="Number"
+                  value={pnumber+1}
+                  // onChange={(e) => setNumber(e.target.value)+1}
+                  disabled
                   autoFocus
                   style={{ marginTop: '20px' }}
-
                 />
 
                 <TextField
-                  id="EmergencyStatus"
+                  required
+                  fullWidth
+                  id="Detail"
+                  label="Detail"
+                  name="Detail"
+                  value={detail}
+                  onChange={(e) => setDetail(e.target.value)}
+                  autoFocus
+                  style={{ marginTop: '20px' }}
+                />
+
+                <TextField
+                  id="PublishedStatus"
                   fullWidth
                   select
-                  name="emergencyStat"
+                  name="PublishedStatus"
                   label="Select"
-                  value={EmergencyStatus}
-                  helperText="Please select Ad Status"
-                  onChange={(e) => setEmergencyStatus(e.target.value)}
+                  value={PublishedStatus}
+                  helperText="Please select Ad Published Status"
+                  onChange={(e) => setPublishedStatus(e.target.value)}
                   style={{ marginTop: '20px' }}
 
                 >
@@ -159,41 +175,65 @@ const UploadFile = () => {
                   ))}
                 </TextField>
 
+                <TextField
+                  id="OfficialStatus"
+                  fullWidth
+                  select
+                  name="OfficialStatus"
+                  label="Select"
+                  value={OfficialStatus}
+                  helperText="Please select Ad Official Status"
+                  onChange={(e) => setOfficialStatus(e.target.value)}
+                  style={{ marginTop: '20px' }}
 
-
+                >
+                  {selectOfficialStatus.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
 
                 <TextField
                   required
                   fullWidth
-                  id="mobile"
+                  id="Remarks"
+                  label="Remarks"
+                  name="Remarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
+                  autoFocus
+                  style={{ marginTop: '20px' }}
+                />
+
+                <TextField
+                  required
+                  fullWidth
                   type="number"
-                  label="mobile"
-                  name="mobile"
-                  value={mobileno}
-                  onChange={(e) => setMobile(e.target.value)}
-                  autoComplete="mobile"
+                  id="ItemValue"
+                  label="Item Value"
+                  name="ItemValue"
+                  value={itemValue}
+                  onChange={(e) => setItemValue(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
-
-
                 />
 
+                <LocalizationProvider dateAdapter={AdapterDateFns} >
+                  <DatePicker
+                    label="Expiry Date"
+                    value={date}
+                    inputFormat="dd/MM/yyyy"
+                    onChange={(newValue) => {
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} required fullWidth style={{ marginTop: '20px' }}  />}
+                  />
+                </LocalizationProvider>
+                <br />
 
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
-                  style={{ marginTop: '20px' }}
-
+                <input type="file" onChange={handleFileSelect} multiple style={{ marginTop: '20px' }}
                 />
-
-
-                <input type="file" onChange={handleFileSelect} multiple />
                 {/* <input type="submit" value="Upload File" /> */}
 
 
