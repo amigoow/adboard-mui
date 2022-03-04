@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -8,6 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import SignUp from '../Components/SignUp';
 import SlideShow from '../Components/SlideShow';
 import UploadFile from '../Components/UploadFile';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+
 
 import {
   Route,
@@ -15,6 +19,13 @@ import {
 } from "react-router-dom";
 
 export default function Home() {
+  const fabStyle = {
+    position: 'fixed',
+    bottom: 16,
+    right: 16,
+  };
+  
+
   const useStyles = makeStyles((theme) => ({
     alignCenter: {
       textAlign: 'center',
@@ -38,12 +49,22 @@ export default function Home() {
     <SlideShow/>
       
       <Container>
+
           {/* <Route path="/signup/">
             <SignUp/>
           </Route> */}
           {/* <SignUp/> */}
-          <UploadFile/>
+          
+          
+          
+          <Link to='/signup/'>
+          <Fab sx={fabStyle} aria-label="Add" color="primary">
+            <AddIcon />
+          </Fab>
+          </Link>
+
           {/* <OwlCarousal /> */}
+          <UploadFile/>
           
 
       </Container>

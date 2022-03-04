@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import notfound from '../notfound.png';
 
 function CardDetails() {
 
@@ -43,7 +44,7 @@ function CardDetails() {
             <Container id="details">
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
-                        <img src={ endpoint + get_image(product.Images) } alt="..." className={classes.myImg} />
+                        <img src={ get_image(product.Images) } alt="..." className={classes.myImg} />
                     </Grid>
                     <Grid className={classes.contentCenter} item xs={4}>
                         
@@ -74,9 +75,12 @@ function CardDetails() {
 export default withRouter(CardDetails);
 
 function get_image ( el ) {
+    const endpoint  = 'http://10.1.4.205:8085/';
     for ( var e in el ) {
         if ( el[e].IsMainImage == "Y" ) {
-            return el[e].Path;
+            return  endpoint + el[e].Path;
         }
     }
+
+    return notfound;
 }

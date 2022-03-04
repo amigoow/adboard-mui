@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Moment from 'react-moment';
 
 import CardDetails from '../Components/CardDetails';
+import notfound from '../notfound.png'; 
 
 import {
     BrowserRouter as Router,
@@ -87,7 +88,7 @@ function Cards({ api }) {
                                             <Card className={classes.card}>
                                                 <CardMedia
                                                     className={classes.cardMedia}
-                                                    image={endpoint + getImage(curEle.Images)}
+                                                    image= {  getImage(curEle.Images) }
                                                     title="Image title"
                                                 />
                                                 <CardContent className={classes.cardContent}>
@@ -164,47 +165,15 @@ function stringToColor(string) {
     return color;
 }
 
-const getImage = (el) => {
-    for (var e in el) {
-        if (el[e].IsMainImage == "Y") {
-            return el[e].Path;
+function getImage ( el ) {
+    
+    for ( var e in el ) {
+        const endpoint = 'http://10.1.4.205:8085/';
+        if ( el[e].IsMainImage == "Y" ) {
+            return endpoint + el[e].Path;
         }
     }
+
+    return notfound;
 }
-const getDate = (date) => {
-    var d = new Date(date);
-    var dd = d.getDay + '-' + d.getMonth + '-' + d.getFullYear;
-    return dd;
-}
-
-
-
-
-/* {cards.map((card) => (
-                        <Grid item key={card} xs={12} sm={6} md={4}>
-                            <Card className={classes.card}>
-                                <CardMedia
-                                    className={classes.cardMedia}
-                                    image="https://source.unsplash.com/random"
-                                    title="Image title"
-                                />
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Heading
-                                    </Typography>
-                                    <Typography>
-                                        This is a media card. You can use this section to describe the content.
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        View
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Edit
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))} */
 
