@@ -38,6 +38,18 @@ export default function SignUp() {
         }
     ];
 
+    // setPnumber("");
+    // setPname("");
+    // setDetail("");
+    // setEmergencyStatus("");
+    // setPublishedStatus("");
+    // setOfficialStatus("");
+    // setCreatedBy("");
+    // setRemarks("");
+    // setItemValue("");
+    // setMobile("");
+    // setEmail("");
+    // setSelectedFiles("");
 
     const [pnumber, setPnumber]                 = useState("");
     const [pname, setPname]                     = useState("");
@@ -79,7 +91,6 @@ export default function SignUp() {
                 images:             null,
                 MainImage:          file
             }),
-
         }).then(
             (response) => {
                 if ( response ) {
@@ -89,23 +100,24 @@ export default function SignUp() {
                 }
             }
         )
-
-        const signup =  {
-            pnumber:            pnumber,
-            EmergencyStatus:    EmergencyStatus,
-            PublishedStatus:    PublishedStatus,
-            OfficialStatus:     OfficialStatus,
-            CreatedBy:          createdBy,
-            Remarks:            remarks,
-            ItemValue:          itemValue,
-            mobileno:           mobileno,
-            email:              email
+        
+        const signup ={
+                    pnumber:              pnumber,
+                EmergencyStatus:    EmergencyStatus,
+                PublishedStatus:    PublishedStatus,
+                OfficialStatus:     OfficialStatus,
+                CreatedBy:          createdBy,
+                Remarks:            remarks,
+                ItemValue:          itemValue,
+                mobileno:           mobileno,
+                email:              email,
         }
         console.log(signup);
 
+        
+        console.log(signup);
+
         setPnumber("");
-        setPname("");
-        setDetail("");
         setEmergencyStatus("");
         setPublishedStatus("");
         setOfficialStatus("");
@@ -156,7 +168,7 @@ export default function SignUp() {
                                 <TextField
                                     required
                                     fullWidth
-                                    id="pname"
+                                    id="pnumber"
                                     label="P Number"
                                     name="pname"
                                     value={pnumber}
@@ -165,7 +177,7 @@ export default function SignUp() {
                                     style={{ marginTop: '20px' }}
 
                                 />
-                                <TextField
+                                {/* <TextField
                                     required
                                     fullWidth
                                     id="detail"
@@ -176,7 +188,7 @@ export default function SignUp() {
                                     autoFocus
                                     style={{ marginTop: '20px' }}
 
-                                />
+                                /> */}
 
                                 <TextField
                                     id="EmergencyStatus"
@@ -197,7 +209,7 @@ export default function SignUp() {
                                     ))}
                                 </TextField>
 
-                                <TextField
+                                {/* <TextField
                                     id="PublishedStatus"
                                     fullWidth
                                     select
@@ -233,10 +245,10 @@ export default function SignUp() {
                                             {option.label}
                                         </MenuItem>
                                     ))}
-                                </TextField>
+                                </TextField> */}
 
 
-                                <TextField
+                                {/* <TextField
                                     autoComplete="given-name"
                                     name="createdBy"
                                     required
@@ -262,9 +274,9 @@ export default function SignUp() {
                                     autoFocus
                                     style={{ marginTop: '20px' }}
 
-                                />
+                                /> */}
 
-                                <TextField
+                                {/* <TextField
                                     autoComplete="ItemValue"
                                     name="itemValue"
                                     required
@@ -276,7 +288,7 @@ export default function SignUp() {
                                     autoFocus
                                     style={{ marginTop: '20px' }}
 
-                                />
+                                /> */}
 
                                 <TextField
                                     required

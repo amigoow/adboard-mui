@@ -10,7 +10,8 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grow from '@mui/material/Grow';
+import Moment from 'react-moment';
+
 import CardDetails from '../Components/CardDetails';
 import notfound from '../notfound.png'; 
 
@@ -19,6 +20,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import { circularProgressClasses } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         flexGrow: 1,
     },
-    paginationCenter:{
+    paginationCenter: {
         paddingTop: theme.spacing(8),
 
     }
@@ -51,14 +53,15 @@ function Cards() {
     const [mydata, setmydata] = useState([]);
 
     const endpoint  = window.api_ip;
-    
-    const getdata = async () => {
+    // debugger;
+    const api = async () => {
         const response = await fetch( endpoint + '/api/Noticeboard/Advertisments');
         setmydata(await response.json());
     }
+    // debugger;
 
     useEffect(() => {
-        getdata();
+        api();
     }, []);
     const classes = useStyles();
 
@@ -67,22 +70,22 @@ function Cards() {
             <CssBaseline />
             <Container className={classes.cardGrid} maxWidth="md" id="cards">
                 <Typography
-                component="h5"
-                variant="h4"
-                spacing={4}
-                align="center"
-                padding={5}
-                
-            > 
-            Ads Listings
-            </Typography>
-            
+                    component="h5"
+                    variant="h4"
+                    spacing={4}
+                    align="center"
+                    padding={5}
+
+                >
+                    Ads Listings
+                </Typography>
+
                 <Grid container spacing={4}>
                     <Router>
                         {
-                            mydata.map((curEle) => {
+                            api.map((curEle) => {
                                 return (
-                                    
+
                                     <Grid item xs={12} sm={6} md={4} key={curEle.Id}>
                                         <Link target="_blank" to={'/card-details/' + curEle.Id} style={{ textDecoration: 'none' }} >
                                             <Card className={classes.card}>
@@ -100,24 +103,23 @@ function Cards() {
                                                         {curEle.Detail}
                                                     </Typography>
                                                     <Typography>
-                                                       
-                                                        <strong>Posted By: </strong> 
-                                                         {curEle.CreatedBy}
+                                                        <strong>Posted By: </strong>
+                                                        {curEle.CreatedBy}
                                                     </Typography>
                                                     <Typography>
-                                                        <strong>Remarks: </strong> 
-                                                         {curEle.Remarks}
+                                                        <strong>Remarks: </strong>
+                                                        {curEle.Remarks}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Item Value: </strong> 
                                                          {curEle.ItemValue}
                                                     </Typography>
                                                     <Typography>
-                                                        <strong>Date: </strong> 
-                                                         {curEle.CreatedDate}
+                                                        <strong>Date:</strong>
+                                                        <Moment format="DD/MM/YYYY">{curEle.CreatedDate}</Moment>
                                                     </Typography>
                                                     <Avatar alt="curEle.CreatedBy" src="/broken" >
-                                                        {curEle.CreatedBy.charAt(0)}  
+                                                        {curEle.CreatedBy.charAt(0)}
                                                     </Avatar>
                                                 </CardContent>
                                                 <CardActions>
@@ -145,34 +147,34 @@ export default Cards
 
 function stringAvatar(name) {
     return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        sx: {
+            bgcolor: stringToColor(name),
+        },
+        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
     };
 }
 
 function stringToColor(string) {
     let hash = 0;
     let i;
-  
+
     /* eslint-disable no-bitwise */
     for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
-  
+
     let color = '#';
-  
+
     for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.substr(-2);
+        const value = (hash >> (i * 8)) & 0xff;
+        color += `00${value.toString(16)}`.substr(-2);
     }
     /* eslint-enable no-bitwise */
-  
+
     return color;
 }
 
-function get_image ( el ) {
+function getImage ( el ) {
     
     for ( var e in el ) {
         const endpoint = window.api_ip ;
@@ -183,42 +185,4 @@ function get_image ( el ) {
 
     return notfound;
 }
-
-function get_date ( date ) {
-   
-   var d = new Date(date);
-    
-   var dd = d.getDay + '-' + d.getMonth + '-' + d.getFullYear;
-    
-   return dd;
-    
-}
-
-/* {cards.map((card) => (
-                        <Grid item key={card} xs={12} sm={6} md={4}>
-                            <Card className={classes.card}>
-                                <CardMedia
-                                    className={classes.cardMedia}
-                                    image="https://source.unsplash.com/random"
-                                    title="Image title"
-                                />
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Heading
-                                    </Typography>
-                                    <Typography>
-                                        This is a media card. You can use this section to describe the content.
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        View
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Edit
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))} */
 

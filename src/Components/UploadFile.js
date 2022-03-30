@@ -13,18 +13,11 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getSuggestedQuery } from '@testing-library/react';
-import Login from '../Components/Login';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken;
-}
 
-const PostAd = () => {
-  
+const UploadFile = () => {
 
   const selectPublishedStatus = [
     {
@@ -48,103 +41,56 @@ const PostAd = () => {
     }
   ];
 
-  const [pnumber, setPnumber] = useState("9875");
+  const [pnumber, setNumber] = useState("9875");
   const [detail, setDetail] = useState("");
-  const [EmergencyStatus, setEmergencyStatus] = useState("P");
   const [PublishedStatus, setPublishedStatus] = useState("P");
   const [OfficialStatus, setOfficialStatus] = useState("O");
-  const [createdBy, setCreatedBy] = useState("");
   const [remarks, setRemarks] = useState("");
   const [itemValue, setItemValue] = useState("");
-  const [mobileno, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [file, setSelectedFiles] = useState("");
   const theme = createTheme();
   const [selectedFile, setSelectedFile] = useState(null);
   const [date, setDate] = React.useState(null);
 
-  const token = getToken();
-  
-    if(!token) {
-        // alert("You need to login first");
-      // return <Login />
-    }
 
   const handleSubmit = (event) => {
-    
     event.preventDefault()
 
     const formData = new FormData();
-    formData.append("ImageBinary", selectedFile);
-    formData.append("PNumber", "P11204");
-    formData.append("FeedBackList", null);
-    formData.append("Id", 423);
-    formData.append("AdvertismentDate", null);
-    formData.append("ExpiryDate", "");
-    formData.append("ExtendedDate", "");
-    formData.append("Detail", "Some details");
-    formData.append("EmergencyStatus", EmergencyStatus);
-    formData.append("PublishedStatus", PublishedStatus);
-    formData.append("OfficialStatus", OfficialStatus);
-    formData.append("CreatedBy", "X Person");
-    formData.append("CreatedDate", "");
-    formData.append("UpdateBy", "Faisall");
-    formData.append("UpdatedDate", "null");
-    formData.append("MainImage", null);
-    formData.append("ItemValue", 1235);
-    formData.append("Images", null);
-    formData.append("Remarks", "detail");
-
-    const endpoint  = window.api_ip;
-    
+    formData.append("selectedFile", selectedFile);
     try {
       const response = axios({
         method: "post",
-        url: endpoint + "/api/Noticeboard/PostFile",
+        url: " http://10.1.4.205:8085//Noticeboard/CreatAdvertisment",
         data: formData,
-        headers: { 
-            "Content-Type": "multipart/form-data" ,
-            "Accept": "application/json, application/xml, text/plain, text/html, *.*"
-        },
+        headers: { "Content-Type": "multipart/form-data" },
         body: JSON.stringify({
-          pnumber: pnumber,
+          Number:pnumber,
           Detail: detail,
-          EmergencyStatus: EmergencyStatus,
           PublishedStatus: PublishedStatus,
           OfficialStatus: OfficialStatus,
-          CreatedBy: createdBy,
           Remarks: remarks,
           ItemValue: itemValue,
-          Date: date,
-          mobileno: mobileno,
-          email: email,
+          Date: date
         }),
       });
       const signup = {
-        pnumber: pnumber,
-        EmergencyStatus: EmergencyStatus,
+        Number:pnumber,
+        Detail: detail,
         PublishedStatus: PublishedStatus,
         OfficialStatus: OfficialStatus,
-        CreatedBy: createdBy,
         Remarks: remarks,
         ItemValue: itemValue,
-	Date: date,
-        mobileno: mobileno,
-        email: email,
+        Date: date
+
+
       }
-
       console.log(signup);
-
-      setPnumber("");
-      setEmergencyStatus("");
+      
+      setNumber(pnumber);
       setPublishedStatus("");
       setOfficialStatus("");
-      setCreatedBy("");
       setRemarks("");
       setItemValue("");
-      setMobile("");
-      setEmail("");
-      setSelectedFiles("");
       setDate("");
 
     } catch (error) {
@@ -184,12 +130,13 @@ const PostAd = () => {
             <Grid item sm={12}>
 
               <form onSubmit={handleSubmit}>
-                <TextField
+
+              <TextField
                   required
                   fullWidth
                   id="pnumber"
                   label="P.No#"
-                  name="PNumber"
+                  name="Number"
                   value={pnumber+1}
                   // onChange={(e) => setNumber(e.target.value)+1}
                   disabled
@@ -210,14 +157,14 @@ const PostAd = () => {
                 />
 
                 <TextField
-                  id="EmergencyStatus"
+                  id="PublishedStatus"
                   fullWidth
                   select
-                  name="emergencyStat"
+                  name="PublishedStatus"
                   label="Select"
-                  value={EmergencyStatus}
-                  helperText="Please select Ad Status"
-                  onChange={(e) => setEmergencyStatus(e.target.value)}
+                  value={PublishedStatus}
+                  helperText="Please select Ad Published Status"
+                  onChange={(e) => setPublishedStatus(e.target.value)}
                   style={{ marginTop: '20px' }}
 
                 >
@@ -250,31 +197,26 @@ const PostAd = () => {
                 <TextField
                   required
                   fullWidth
-                  id="mobile"
-                  type="number"
-                  label="mobile"
-                  name="mobile"
-                  value={mobileno}
-                  onChange={(e) => setMobile(e.target.value)}
-                  autoComplete="mobile"
+                  id="Remarks"
+                  label="Remarks"
+                  name="Remarks"
+                  value={remarks}
+                  onChange={(e) => setRemarks(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
-
-
                 />
-
 
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="number"
+                  id="ItemValue"
+                  label="Item Value"
+                  name="ItemValue"
+                  value={itemValue}
+                  onChange={(e) => setItemValue(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
-
                 />
 
                 <LocalizationProvider dateAdapter={AdapterDateFns} >
@@ -316,4 +258,4 @@ const PostAd = () => {
 
 }
 
-export default PostAd
+export default UploadFile

@@ -14,9 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getSuggestedQuery } from '@testing-library/react';
 import Login from '../Components/Login';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
   const userToken = JSON.parse(tokenString);
@@ -24,35 +22,25 @@ function getToken() {
 }
 
 const PostAd = () => {
-  
+  const [selectedFile, setSelectedFile] = React.useState(null);
 
   const selectPublishedStatus = [
     {
-      value: 'P',
+      value: 'T',
       label: 'Published',
     },
     {
-      value: 'D',
+      value: 'F',
       label: 'Deferred',
     }
   ];
 
-  const selectOfficialStatus = [
-    {
-      value: 'O',
-      label: 'Official',
-    },
-    {
-      value: 'C',
-      label: 'Caks',
-    }
-  ];
-
-  const [pnumber, setPnumber] = useState("9875");
+  const [pnumber, setPnumber] = useState("");
+  const [pname, setPname] = useState("");
   const [detail, setDetail] = useState("");
-  const [EmergencyStatus, setEmergencyStatus] = useState("P");
-  const [PublishedStatus, setPublishedStatus] = useState("P");
-  const [OfficialStatus, setOfficialStatus] = useState("O");
+  const [EmergencyStatus, setEmergencyStatus] = useState("T");
+  const [PublishedStatus, setPublishedStatus] = useState("T");
+  const [OfficialStatus, setOfficialStatus] = useState("T");
   const [createdBy, setCreatedBy] = useState("");
   const [remarks, setRemarks] = useState("");
   const [itemValue, setItemValue] = useState("");
@@ -60,14 +48,12 @@ const PostAd = () => {
   const [email, setEmail] = useState("");
   const [file, setSelectedFiles] = useState("");
   const theme = createTheme();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [date, setDate] = React.useState(null);
 
   const token = getToken();
   
     if(!token) {
-        // alert("You need to login first");
-      // return <Login />
+        alert("You need to login first");
+      return <Login />
     }
 
   const handleSubmit = (event) => {
@@ -107,7 +93,7 @@ const PostAd = () => {
             "Accept": "application/json, application/xml, text/plain, text/html, *.*"
         },
         body: JSON.stringify({
-          pnumber: pnumber,
+          pname: pname,
           Detail: detail,
           EmergencyStatus: EmergencyStatus,
           PublishedStatus: PublishedStatus,
@@ -115,7 +101,6 @@ const PostAd = () => {
           CreatedBy: createdBy,
           Remarks: remarks,
           ItemValue: itemValue,
-          Date: date,
           mobileno: mobileno,
           email: email,
         }),
@@ -128,7 +113,6 @@ const PostAd = () => {
         CreatedBy: createdBy,
         Remarks: remarks,
         ItemValue: itemValue,
-	Date: date,
         mobileno: mobileno,
         email: email,
       }
@@ -145,7 +129,6 @@ const PostAd = () => {
       setMobile("");
       setEmail("");
       setSelectedFiles("");
-      setDate("");
 
     } catch (error) {
       console.log(error)
@@ -188,25 +171,13 @@ const PostAd = () => {
                   required
                   fullWidth
                   id="pnumber"
-                  label="P.No#"
-                  name="PNumber"
-                  value={pnumber+1}
-                  // onChange={(e) => setNumber(e.target.value)+1}
-                  disabled
+                  label="P Number"
+                  name="pname"
+                  value="sdfs"
+                
                   autoFocus
                   style={{ marginTop: '20px' }}
-                />
 
-                <TextField
-                  required
-                  fullWidth
-                  id="Detail"
-                  label="Detail"
-                  name="Detail"
-                  value={detail}
-                  onChange={(e) => setDetail(e.target.value)}
-                  autoFocus
-                  style={{ marginTop: '20px' }}
                 />
 
                 <TextField
@@ -228,24 +199,8 @@ const PostAd = () => {
                   ))}
                 </TextField>
 
-                <TextField
-                  id="OfficialStatus"
-                  fullWidth
-                  select
-                  name="OfficialStatus"
-                  label="Select"
-                  value={OfficialStatus}
-                  helperText="Please select Ad Official Status"
-                  onChange={(e) => setOfficialStatus(e.target.value)}
-                  style={{ marginTop: '20px' }}
 
-                >
-                  {selectOfficialStatus.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+
 
                 <TextField
                   required
@@ -277,21 +232,8 @@ const PostAd = () => {
 
                 />
 
-                <LocalizationProvider dateAdapter={AdapterDateFns} >
-                  <DatePicker
-                    label="Expiry Date"
-                    value={date}
-                    inputFormat="dd/MM/yyyy"
-                    onChange={(newValue) => {
-                      setDate(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} required fullWidth style={{ marginTop: '20px' }}  />}
-                  />
-                </LocalizationProvider>
-                <br />
 
-                <input type="file" onChange={handleFileSelect} multiple style={{ marginTop: '20px' }}
-                />
+                <input type="file" onChange={handleFileSelect} multiple />
                 {/* <input type="submit" value="Upload File" /> */}
 
 

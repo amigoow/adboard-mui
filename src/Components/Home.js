@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from '../Components/SignUp';
 import SlideShow from '../Components/SlideShow';
+import UploadFile from '../Components/UploadFile';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import PostAd from '../Components/PostAd';
@@ -49,15 +50,20 @@ export default function Home() {
     <SlideShow/>
       
       <Container>
-          
-          <Route path="/signup/">
+
+          {/* <Route path="/signup/">
             <SignUp/>
-          </Route>
+          </Route> */}
+          {/* <SignUp/> */}
+          
+          
+          
           <Link to='/signup/'>
           <Fab sx={fabStyle} aria-label="Add" color="primary">
             <AddIcon />
           </Fab>
           </Link>
+
           {/* <OwlCarousal /> */}
          
           
