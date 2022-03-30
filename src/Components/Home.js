@@ -9,6 +9,7 @@ import SignUp from '../Components/SignUp';
 import SlideShow from '../Components/SlideShow';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import PostAd from '../Components/PostAd';
 
 
 
@@ -58,6 +59,7 @@ export default function Home() {
           </Fab>
           </Link>
           {/* <OwlCarousal /> */}
+         
           
 
       </Container>

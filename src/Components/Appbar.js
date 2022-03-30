@@ -14,6 +14,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import PostAd from './PostAd.js';
 
 function Appbar() {
     const useStyles = makeStyles((theme) => ({
@@ -52,7 +53,7 @@ function Appbar() {
           <Link to="/cards" className={classes.link}>Ads</Link>
 
             
-            <Link to="/signup" className={classes.link}>Post Ad</Link>
+            <Link to="/postad" className={classes.link}>Post Ad</Link>
 
             
             <Link to={ ! getToken() ? '/login' : '/logout'  }  className={classes.link}>
@@ -76,6 +77,9 @@ function Appbar() {
             </Route>
             <Route  path="/login/">
                 <Login/>
+            </Route>
+            <Route  path="/postad/">
+                <PostAd/>
             </Route>
             <Route  path="/logout/">
                 <Logout/>

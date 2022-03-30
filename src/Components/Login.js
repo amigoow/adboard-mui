@@ -17,10 +17,11 @@ export default function Login() {
     const [password, setPassword] = useState("");;
     
     const theme = createTheme();
-    
+    const endpoint  = window.api_ip;
+
     const submitForm = (e) => {
         e.preventDefault();
-        let res = fetch("http://10.1.4.205:8085/api/Noticeboard/CheckIsValidUser", {
+        let res = fetch( endpoint + "/api/Noticeboard/CheckIsValidUser", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -33,11 +34,27 @@ export default function Login() {
             }),
 
         }).then(
+            
             (response) => {
-                if ( response ) {
-                    sessionStorage.setItem('token', JSON.stringify(email));
-                    window.location.href = "/signup";
+
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                    return;
                 }
+        
+                // Examine the text in the response
+                response.json().then(function(data) {
+                    debugger;
+                    if ( data ) {
+                        sessionStorage.setItem('token', JSON.stringify(email));
+                        window.location.href = "/signup";
+                    } else {
+                        alert("Invalid login details");
+                    }
+                });
+
+               
             }
         )
         const login = {

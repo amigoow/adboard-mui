@@ -31,12 +31,12 @@ const Slideshow = () => {
        
             <Box  style={{ 'backgroundColor': `#cbe5ff` }} >
                 <div>
-                <div class='ripple-background'>
-                    <div class='circle xxlarge shade1'></div>
-                    <div class='circle xlarge shade2'></div>
-                    <div class='circle large shade3'></div>
-                    <div class='circle mediun shade4'></div>
-                    <div class='circle small shade5'></div>
+                <div className='ripple-background'>
+                    <div className='circle xxlarge shade1'></div>
+                    <div className='circle xlarge shade2'></div>
+                    <div className='circle large shade3'></div>
+                    <div className='circle mediun shade4'></div>
+                    <div className='circle small shade5'></div>
                     </div>
             <Slide easing="ease">
             
@@ -57,7 +57,9 @@ const Slideshow = () => {
                             padding={3}
                             
                         > 
-                            Welcome to PNRA Ads
+
+                        Welcome to PNRA Ads 
+                         <div>{ process.env.REACT_APP_ENV }</div>
                         </Typography>
                             <Stack
                                 direction="row"

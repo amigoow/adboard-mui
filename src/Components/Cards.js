@@ -49,9 +49,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Cards() {
     const [mydata, setmydata] = useState([]);
-    const endpoint = 'http://10.1.4.205:8085/';
+
+    const endpoint  = window.api_ip;
+    
     const getdata = async () => {
-        const response = await fetch( endpoint + 'api/Noticeboard/Advertisments');
+        const response = await fetch( endpoint + '/api/Noticeboard/Advertisments');
         setmydata(await response.json());
     }
 
@@ -85,8 +87,12 @@ function Cards() {
                                         <Link target="_blank" to={'/card-details/' + curEle.Id} style={{ textDecoration: 'none' }} >
                                             <Card className={classes.card}>
                                                 <CardMedia
+                                                    crossorigin
                                                     className={classes.cardMedia}
-                                                    image= {  get_image(curEle.Images) }
+                                                    // image= {  get_image(curEle.Images) }
+
+                                                    image= { endpoint +  curEle.MainImage }
+                                                    
                                                     title="Image title"
                                                 />
                                                 <CardContent className={classes.cardContent}>
@@ -101,6 +107,10 @@ function Cards() {
                                                     <Typography>
                                                         <strong>Remarks: </strong> 
                                                          {curEle.Remarks}
+                                                    </Typography>
+                                                    <Typography>
+                                                        <strong>Item Value: </strong> 
+                                                         {curEle.ItemValue}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Date: </strong> 
@@ -165,9 +175,9 @@ function stringToColor(string) {
 function get_image ( el ) {
     
     for ( var e in el ) {
-        const endpoint = 'http://10.1.4.205:8085/';
+        const endpoint = window.api_ip ;
         if ( el[e].IsMainImage == "Y" ) {
-            return endpoint + el[e].Path;
+            return endpoint + '/' + el[e].Path;
         }
     }
 

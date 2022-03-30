@@ -55,15 +55,16 @@ export default function SignUp() {
     
     
     const theme = createTheme();
+    const endpoint  = window.api_ip;
 
     const submitForm = (e) => {
         e.preventDefault();
-        let res = fetch("http://10.1.4.205:8085/api/Noticeboard/CreatAdvertisment", {
+        let res = fetch( endpoint + "/api/Noticeboard/CreatAdvertisment", {
             method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+            // headers: {
+            //     'Accept': 'application/json',
+            //     'Content-Type': 'application/json',
+            // },
             body: JSON.stringify({
                 pname:              pname,
                 Detail:             detail,
@@ -88,6 +89,19 @@ export default function SignUp() {
                 }
             }
         )
+
+        const signup =  {
+            pnumber:            pnumber,
+            EmergencyStatus:    EmergencyStatus,
+            PublishedStatus:    PublishedStatus,
+            OfficialStatus:     OfficialStatus,
+            CreatedBy:          createdBy,
+            Remarks:            remarks,
+            ItemValue:          itemValue,
+            mobileno:           mobileno,
+            email:              email
+        }
+        console.log(signup);
 
         setPnumber("");
         setPname("");
