@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
@@ -24,7 +24,7 @@ function getToken() {
 }
 
 const PostAd = () => {
-  
+
 
   const selectPublishedStatus = [
     {
@@ -64,14 +64,25 @@ const PostAd = () => {
   const [date, setDate] = React.useState(null);
 
   const token = getToken();
-  
-    if(!token) {
-        // alert("You need to login first");
-      // return <Login />
-    }
+
+  if (!token) {
+    // alert("You need to login first");
+    // return <Login />
+  }
+
+  const [mydata, setmydata] = useState([]);
+  const getdata = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    setmydata(await response.json());
+  }
+
+  useEffect(() => {
+    getdata();
+  }, []);
+  // const classes = useStyles();
 
   const handleSubmit = (event) => {
-    
+
     event.preventDefault()
 
     const formData = new FormData();
@@ -95,16 +106,16 @@ const PostAd = () => {
     formData.append("Images", null);
     formData.append("Remarks", "detail");
 
-    const endpoint  = window.api_ip;
-    
+    const endpoint = window.api_ip;
+
     try {
       const response = axios({
         method: "post",
         url: endpoint + "/api/Noticeboard/PostFile",
         data: formData,
-        headers: { 
-            "Content-Type": "multipart/form-data" ,
-            "Accept": "application/json, application/xml, text/plain, text/html, *.*"
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Accept": "application/json, application/xml, text/plain, text/html, *.*"
         },
         body: JSON.stringify({
           pnumber: pnumber,
@@ -128,7 +139,7 @@ const PostAd = () => {
         CreatedBy: createdBy,
         Remarks: remarks,
         ItemValue: itemValue,
-	Date: date,
+        Date: date,
         mobileno: mobileno,
         email: email,
       }
@@ -152,8 +163,15 @@ const PostAd = () => {
     }
   }
 
+  // const handleFileSelect = (event) => {
+  //   setSelectedFile(event.target.files[0])
+  // }
   const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0])
+    let images = [];
+    for (let i = 0; i < event.target.files.length; i++) {
+      images.push(URL.createObjectURL(event.target.files[i]))
+    }
+    console.log(images);
   }
   return (
     <ThemeProvider theme={theme}>
@@ -184,7 +202,42 @@ const PostAd = () => {
             <Grid item sm={12}>
 
               <form onSubmit={handleSubmit}>
-                <TextField
+                {
+                  mydata.map((curEle) => {
+                    return (
+                      <>
+                        <TextField
+                          required
+                          fullWidth
+                          id="pnumber"
+                          label="P.No#"
+                          name="PNumber"
+                          value={curEle.id}
+                          // onChange={(e) => setNumber(e.target.value)+1}
+                          disabled
+                          autoFocus
+                          style={{ marginTop: '20px' }}
+                        />
+
+                        <TextField
+                          required
+                          fullWidth
+                          id="Detail"
+                          label="Detail"
+                          name="Detail"
+                          value={curEle.name}
+                          onChange={(e) => setDetail(e.target.value)}
+                          autoFocus
+                          style={{ marginTop: '20px' }}
+                        />
+
+                      </>
+                    )
+
+                  })
+
+                }
+                {/* <TextField
                   required
                   fullWidth
                   id="pnumber"
@@ -195,9 +248,9 @@ const PostAd = () => {
                   disabled
                   autoFocus
                   style={{ marginTop: '20px' }}
-                />
+                /> */}
 
-                <TextField
+                {/* <TextField
                   required
                   fullWidth
                   id="Detail"
@@ -207,7 +260,7 @@ const PostAd = () => {
                   onChange={(e) => setDetail(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
-                />
+                /> */}
 
                 <TextField
                   id="EmergencyStatus"
@@ -285,7 +338,7 @@ const PostAd = () => {
                     onChange={(newValue) => {
                       setDate(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} required fullWidth style={{ marginTop: '20px' }}  />}
+                    renderInput={(params) => <TextField {...params} required fullWidth style={{ marginTop: '20px' }} />}
                   />
                 </LocalizationProvider>
                 <br />
