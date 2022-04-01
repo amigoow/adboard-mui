@@ -117,22 +117,22 @@ const PostAd = () => {
 
     const formData = new FormData();
     formData.append("ImageBinary", images);
-    formData.append("PNumber", "P11204");
+    formData.append("PNumber", pNumber);
     formData.append("FeedBackList", null);
-    formData.append("Id", 423);
+    formData.append("Id", pNumber);
     formData.append("AdvertismentDate", null);
     formData.append("ExpiryDate", "");
     formData.append("ExtendedDate", "");
-    formData.append("Detail", "Some details");
+    formData.append("Detail", detail);
     formData.append("EmergencyStatus", AdCategory);
     formData.append("PublishedStatus", PublishedStatus);
     formData.append("OfficialStatus", OfficialStatus);
-    formData.append("CreatedBy", "X Person");
+    formData.append("CreatedBy", name);
     formData.append("CreatedDate", "");
-    formData.append("UpdateBy", "Faisall");
+    formData.append("UpdateBy", name);
     formData.append("UpdatedDate", "null");
     formData.append("MainImage", null);
-    formData.append("ItemValue", 1235);
+    formData.append("ItemValue", itemValue);
     formData.append("Images", null);
     formData.append("Remarks", "detail");
 
