@@ -17,6 +17,14 @@ import Login from '../Components/Login';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+
+import FormControl from '@mui/material/FormControl';
+
+
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
   const userToken = JSON.parse(tokenString);
@@ -26,15 +34,20 @@ function getToken() {
 const PostAd = () => {
 
 
-  const selectPublishedStatus = [
+  const selectAdCategory = [
+    
     {
-      value: 'P',
-      label: 'Published',
+      value: 'D',
+      label: 'Vehicle',
     },
     {
       value: 'D',
-      label: 'Deferred',
-    }
+      label: 'Electronics',
+    },
+    {
+      value: 'P',
+      label: 'Property',
+    },
   ];
 
   const selectOfficialStatus = [
@@ -44,24 +57,40 @@ const PostAd = () => {
     },
     {
       value: 'C',
-      label: 'Caks',
+      label: 'Private',
     }
   ];
 
-  const [pnumber, setPnumber] = useState("9875");
+  const [pNumber, setPnumber] = useState("");
+  const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
-  const [EmergencyStatus, setEmergencyStatus] = useState("P");
-  const [PublishedStatus, setPublishedStatus] = useState("P");
-  const [OfficialStatus, setOfficialStatus] = useState("O");
-  const [createdBy, setCreatedBy] = useState("");
-  const [remarks, setRemarks] = useState("");
   const [itemValue, setItemValue] = useState("");
+  const [AdCategory, setAdCategory] = useState("");
+  const [PublishedStatus, setPublishedStatus] = useState("");
+  const [OfficialStatus, setOfficialStatus] = useState("");
+  // const [createdBy, setName] = useState("");
+  // const [remarks, setRemarks] = useState("");
+  
   const [mobileno, setMobile] = useState("");
   const [email, setEmail] = useState("");
+  const [expiryDate, setExpiryDate] = React.useState(null);
+
   const [file, setSelectedFiles] = useState("");
   const theme = createTheme();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [date, setDate] = React.useState(null);
+
+  // const handleFileSelect = (event) => {
+  //   setSelectedFile(event.target.files[0])
+  // }
+  let images = [];
+  const handleFileSelect = (event) => {
+   
+    for (let i = 0; i < event.target.files.length; i++) {
+      images.push(URL.createObjectURL(event.target.files[i]))
+    }
+    console.log(images);
+  }
+  
 
   const token = getToken();
 
@@ -69,10 +98,11 @@ const PostAd = () => {
     // alert("You need to login first");
     // return <Login />
   }
+  
 
-  const [mydata, setmydata] = useState([]);
+  const [currUser, setmydata] = useState([]);
   const getdata = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
     setmydata(await response.json());
   }
 
@@ -86,7 +116,7 @@ const PostAd = () => {
     event.preventDefault()
 
     const formData = new FormData();
-    formData.append("ImageBinary", selectedFile);
+    formData.append("ImageBinary", images);
     formData.append("PNumber", "P11204");
     formData.append("FeedBackList", null);
     formData.append("Id", 423);
@@ -94,7 +124,7 @@ const PostAd = () => {
     formData.append("ExpiryDate", "");
     formData.append("ExtendedDate", "");
     formData.append("Detail", "Some details");
-    formData.append("EmergencyStatus", EmergencyStatus);
+    formData.append("EmergencyStatus", AdCategory);
     formData.append("PublishedStatus", PublishedStatus);
     formData.append("OfficialStatus", OfficialStatus);
     formData.append("CreatedBy", "X Person");
@@ -117,62 +147,39 @@ const PostAd = () => {
           "Content-Type": "multipart/form-data",
           "Accept": "application/json, application/xml, text/plain, text/html, *.*"
         },
-        body: JSON.stringify({
-          pnumber: pnumber,
-          Detail: detail,
-          EmergencyStatus: EmergencyStatus,
-          PublishedStatus: PublishedStatus,
-          OfficialStatus: OfficialStatus,
-          CreatedBy: createdBy,
-          Remarks: remarks,
-          ItemValue: itemValue,
-          Date: date,
-          mobileno: mobileno,
-          email: email,
-        }),
+        // body: JSON.stringify({
+        //   pnumber: pnumber,
+        //   Detail: detail,
+        //   EmergencyStatus: EmergencyStatus,
+        //   PublishedStatus: PublishedStatus,
+        //   OfficialStatus: OfficialStatus,
+        //   CreatedBy: createdBy,
+        //   Remarks: remarks,
+        //   ItemValue: itemValue,
+        //   Date: date,
+        //   mobileno: mobileno,
+        //   email: email,
+        // }),
       });
-      const signup = {
-        pnumber: pnumber,
-        EmergencyStatus: EmergencyStatus,
-        PublishedStatus: PublishedStatus,
-        OfficialStatus: OfficialStatus,
-        CreatedBy: createdBy,
-        Remarks: remarks,
-        ItemValue: itemValue,
-        Date: date,
-        mobileno: mobileno,
-        email: email,
-      }
-
-      console.log(signup);
-
+     
       setPnumber("");
-      setEmergencyStatus("");
+      setAdCategory("");
       setPublishedStatus("");
       setOfficialStatus("");
-      setCreatedBy("");
-      setRemarks("");
+      // setCreatedBy("");
+      // setRemarks("");
       setItemValue("");
       setMobile("");
       setEmail("");
       setSelectedFiles("");
-      setDate("");
+      setExpiryDate("");
 
     } catch (error) {
       console.log(error)
     }
   }
 
-  // const handleFileSelect = (event) => {
-  //   setSelectedFile(event.target.files[0])
-  // }
-  const handleFileSelect = (event) => {
-    let images = [];
-    for (let i = 0; i < event.target.files.length; i++) {
-      images.push(URL.createObjectURL(event.target.files[i]))
-    }
-    console.log(images);
-  }
+  
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
@@ -202,79 +209,75 @@ const PostAd = () => {
             <Grid item sm={12}>
 
               <form onSubmit={handleSubmit}>
-                {
-                  mydata.map((curEle) => {
-                    return (
-                      <>
-                        <TextField
-                          required
-                          fullWidth
-                          id="pnumber"
-                          label="P.No#"
-                          name="PNumber"
-                          value={curEle.id}
-                          // onChange={(e) => setNumber(e.target.value)+1}
-                          disabled
-                          autoFocus
-                          style={{ marginTop: '20px' }}
-                        />
-
-                        <TextField
-                          required
-                          fullWidth
-                          id="Detail"
-                          label="Detail"
-                          name="Detail"
-                          value={curEle.name}
-                          onChange={(e) => setDetail(e.target.value)}
-                          autoFocus
-                          style={{ marginTop: '20px' }}
-                        />
-
-                      </>
-                    )
-
-                  })
-
-                }
-                {/* <TextField
+                
+                
+                <TextField
                   required
                   fullWidth
                   id="pnumber"
                   label="P.No#"
+                  onChange={(e) => setPnumber(e.target.value)}
                   name="PNumber"
-                  value={pnumber+1}
-                  // onChange={(e) => setNumber(e.target.value)+1}
+                  value={currUser.id}
                   disabled
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   autoFocus
                   style={{ marginTop: '20px' }}
-                /> */}
+                />
 
-                {/* <TextField
+                <TextField
+                  required
+                  fullWidth
+                  id="Name"
+                  label="Name"
+                  name="Name"
+                  disabled
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value = {currUser.name}
+                  onChange={(e) => setName(e.target.value)}
+                  autoFocus
+                  style={{ marginTop: '20px' }}
+                />
+
+                <TextField
                   required
                   fullWidth
                   id="Detail"
-                  label="Detail"
+                  label="Details"
                   name="Detail"
-                  value={detail}
+                  multiline
+                  rows={4}
                   onChange={(e) => setDetail(e.target.value)}
-                  autoFocus
                   style={{ marginTop: '20px' }}
-                /> */}
+                />
+
+                <FormControl fullWidth style={{ marginTop: '20px' }}>
+                  <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+                  <OutlinedInput
+                    id="ItemvValue"
+                    label="Value"
+                    name="ItemValue"
+                    startAdornment={<InputAdornment position="start">PKR</InputAdornment>}
+                    onChange={(e) => setItemValue(e.target.value)}
+                  />
+                </FormControl>
 
                 <TextField
-                  id="EmergencyStatus"
+                  id="AdCategory"
                   fullWidth
                   select
-                  name="emergencyStat"
+                  name="AdCategory"
                   label="Select"
-                  value={EmergencyStatus}
-                  helperText="Please select Ad Status"
-                  onChange={(e) => setEmergencyStatus(e.target.value)}
+                  value={AdCategory}
+                  helperText="Please select Ad Category"
+                  onChange={(e) => setAdCategory(e.target.value)}
                   style={{ marginTop: '20px' }}
-
                 >
-                  {selectPublishedStatus.map((option) => (
+                  {selectAdCategory.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
@@ -303,14 +306,15 @@ const PostAd = () => {
                 <TextField
                   required
                   fullWidth
-                  id="mobile"
-                  type="number"
-                  label="mobile"
-                  name="mobile"
-                  value={mobileno}
+                  id="mobileno"
+                  type="tel"
+                  label="Mobile Num"
                   onChange={(e) => setMobile(e.target.value)}
-                  autoComplete="mobile"
-                  autoFocus
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  name="mobileno"
+                  value={currUser.phone}
                   style={{ marginTop: '20px' }}
 
 
@@ -323,9 +327,11 @@ const PostAd = () => {
                   id="email"
                   label="Email Address"
                   name="email"
-                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value = {currUser.email}
                   style={{ marginTop: '20px' }}
 
                 />
@@ -333,19 +339,26 @@ const PostAd = () => {
                 <LocalizationProvider dateAdapter={AdapterDateFns} >
                   <DatePicker
                     label="Expiry Date"
-                    value={date}
+                    helperText="Date after which the Ad will be hidden"
+                    value={expiryDate}
                     inputFormat="dd/MM/yyyy"
                     onChange={(newValue) => {
-                      setDate(newValue);
+                      setExpiryDate(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} required fullWidth style={{ marginTop: '20px' }} />}
+                    renderInput={(params) => <TextField {...params} 
+                    required 
+                    style={{ marginTop: '20px' }} />}
                   />
                 </LocalizationProvider>
                 <br />
 
-                <input type="file" onChange={handleFileSelect} multiple style={{ marginTop: '20px' }}
+                <input
+                 type="file" 
+                 onChange={handleFileSelect} 
+                 label="Upload image"
+                 multiple style={{ marginTop: '20px' }}
                 />
-                {/* <input type="submit" value="Upload File" /> */}
+                
 
 
                 <Button
