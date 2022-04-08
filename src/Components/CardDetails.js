@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import notfound from '../notfound.png';
+import Box from '@mui/material/Box';
 
 function CardDetails() {
 
@@ -45,10 +46,14 @@ function CardDetails() {
             content =
             <Container id="details">
                 <Grid container spacing={2}>
-                    <Grid item xs={8}>
-                        
-                        
-                        <img crossOrigin src={ endpoint + product.MainImage } alt="..a." className={classes.myImg} />
+                    <Grid item xs={8}>    
+                        <Box
+                            component="img"
+                            sx={{ width: 700 }}
+                            alt="The house from the offer."
+                            src={`data:image/jpeg;base64,${product.ImageBinary}`}
+                        />
+                        {/* <img src={ endpoint + product.MainImage } alt="..a." className={classes.myImg} /> */}
                     </Grid>
                     <Grid className={classes.contentCenter} item xs={4}>
                         

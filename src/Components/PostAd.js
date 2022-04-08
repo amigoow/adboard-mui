@@ -79,62 +79,70 @@ const PostAd = () => {
   const theme = createTheme();
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // const handleFileSelect = (event) => {
-  //   setSelectedFile(event.target.files[0])
-  // }
-  let images = [];
   const handleFileSelect = (event) => {
-   
-    for (let i = 0; i < event.target.files.length; i++) {
-      images.push(URL.createObjectURL(event.target.files[i]))
-    }
-    console.log(images);
+    setSelectedFile(event.target.files[0])
   }
+  // let images = [];
+  // const handleFileSelect = (event) => {
+   
+  //   for (let i = 0; i < event.target.files.length; i++) {
+  //     images.push(URL.createObjectURL(event.target.files[i]))
+  //   }
+  //   console.log(images);
+  // }
   
 
-  const token = getToken();
-
-  if (!token) {
-    // alert("You need to login first");
-    // return <Login />
-  }
+  
   
 
   const [currUser, setmydata] = useState([]);
-  const getdata = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
-    setmydata(await response.json());
-  }
+  
 
   useEffect(() => {
     getdata();
   }, []);
   // const classes = useStyles();
 
+  const token = getToken();
+  
+  const endpoint  = window.api_ip;
+  console.log (endpoint);
+  const getdata = async () => {
+    
+    const response = await fetch( endpoint + '/api/Noticeboard/GetUser/?userId='  + token.P_NO);
+    setmydata(await response.json());
+  }
+  
+  if (!token) {
+    alert("You need to login first");
+    return <Login />
+  }
+
   const handleSubmit = (event) => {
 
     event.preventDefault()
 
     const formData = new FormData();
-    formData.append("ImageBinary", images);
-    formData.append("PNumber", pNumber);
+
+    formData.append("ImageBinary", selectedFile);
+    formData.append("PNumber", currUser.P_NO);
     formData.append("FeedBackList", null);
-    formData.append("Id", pNumber);
+    formData.append("Id", currUser.P_NO);
     formData.append("AdvertismentDate", null);
-    formData.append("ExpiryDate", "");
+    formData.append("ExpiryDate", expiryDate.toLocaleDateString("en-US"));
     formData.append("ExtendedDate", "");
     formData.append("Detail", detail);
     formData.append("EmergencyStatus", AdCategory);
     formData.append("PublishedStatus", PublishedStatus);
     formData.append("OfficialStatus", OfficialStatus);
-    formData.append("CreatedBy", name);
+    formData.append("CreatedBy", currUser.Name);
     formData.append("CreatedDate", "");
-    formData.append("UpdateBy", name);
+    formData.append("UpdateBy", currUser.Name);
     formData.append("UpdatedDate", "null");
     formData.append("MainImage", null);
     formData.append("ItemValue", itemValue);
     formData.append("Images", null);
-    formData.append("Remarks", "detail");
+    formData.append("Remarks", detail);
 
     const endpoint = window.api_ip;
 
@@ -218,7 +226,7 @@ const PostAd = () => {
                   label="P.No#"
                   onChange={(e) => setPnumber(e.target.value)}
                   name="PNumber"
-                  value={currUser.id}
+                  value={currUser.P_NO}
                   disabled
                   InputLabelProps={{
                     shrink: true,
@@ -237,7 +245,7 @@ const PostAd = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value = {currUser.name}
+                  value = {currUser.Name}
                   onChange={(e) => setName(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
@@ -314,7 +322,7 @@ const PostAd = () => {
                     shrink: true,
                   }}
                   name="mobileno"
-                  value={currUser.phone}
+                  value={currUser.Mobile_No}
                   style={{ marginTop: '20px' }}
 
 
@@ -331,7 +339,7 @@ const PostAd = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value = {currUser.email}
+                  value = {currUser.Email}
                   style={{ marginTop: '20px' }}
 
                 />
@@ -368,7 +376,7 @@ const PostAd = () => {
                   sx={{ mt: 3, mb: 2 }}
 
                 >
-                  Sign Up
+                  Post
                 </Button>
 
 

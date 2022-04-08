@@ -21,6 +21,7 @@ export default function Login() {
 
     const submitForm = (e) => {
         e.preventDefault();
+        debugger;
         let res = fetch( endpoint + "/api/Noticeboard/CheckIsValidUser", {
             method: "POST",
             headers: {
@@ -47,7 +48,8 @@ export default function Login() {
                 response.json().then(function(data) {
                     debugger;
                     if ( data ) {
-                        sessionStorage.setItem('token', JSON.stringify(email));
+                        alert("Welcome, " + data.Name + '!');
+                        sessionStorage.setItem('token', JSON.stringify(data));
                         window.location.href = "/signup";
                     } else {
                         alert("Invalid login details");
