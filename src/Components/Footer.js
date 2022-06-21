@@ -14,12 +14,12 @@ export default function Footer() {
         },
       });
       const classes = useStyles();
-
-   return (
-    <BottomNavigation className={classes.root}>
-      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-    </BottomNavigation>
-  );
+    return (false);
+  //  return (
+  //   <BottomNavigation className={classes.root}>
+  //     {/* <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+  //     <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+  //     <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
+  //   </BottomNavigation>
+  // );
 }
