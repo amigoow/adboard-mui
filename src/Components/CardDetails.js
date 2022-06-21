@@ -51,21 +51,22 @@ function CardDetails() {
                             component="img"
                             sx={{ width: 700 }}
                             alt="The house from the offer."
-                            src={`data:image/jpeg;base64,${product.ImageBinary}`}
+                            // src={`data:image/jpeg;base64,${product.ImageBinary}`}
+                            src={endpoint + product.mainImage}
                         />
                         {/* <img src={ endpoint + product.MainImage } alt="..a." className={classes.myImg} /> */}
                     </Grid>
                     <Grid className={classes.contentCenter} item xs={4}>
                         
                         {/* <h2>Email:</h2><p>{product.email}</p> */}
-                        <h4>Posted By:</h4><p>{product.CreatedBy}</p>
+                        <h4>Posted By:</h4><p>{product.createdBy}</p>
                         {/* <h2>Phone#:</h2><p>{product.phone}</p> */}
                         {/* <h2>PNumber:</h2><p>{product.PNumber}</p> */}
-                        <h4>Detail:</h4><p>{product.Detail}</p>
-                        <h4>Remarks:</h4><p>{product.Remarks}</p>
-                        <h4>Created Date:</h4><p>{product.CreatedDate}</p>
-                        <h4>Item Value:</h4><p>{product.ItemValue}</p>
-                        <h4>CreatedDate:</h4><p>{product.CreatedDate}</p>
+                        <h4>Detail:</h4><p>{product.detail}</p>
+                        <h4>Remarks:</h4><p>{product.remarks}</p>
+                        {/* <h4>Created Date:</h4><p>{product.CreatedDate}</p> */}
+                        <h4>Item Value:</h4><p>{product.itemValue}</p>
+                        {/* <h4>CreatedDate:</h4><p>{product.CreatedDate}</p> */}
                         
                         {/* <p>{url}</p> */}
                     </Grid>

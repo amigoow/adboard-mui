@@ -48,7 +48,7 @@ export default function Login() {
                 response.json().then(function(data) {
                     debugger;
                     if ( data ) {
-                        alert("Welcome, " + data.Name + '!');
+                        alert("Welcome, " + data.name + '!');
                         sessionStorage.setItem('token', JSON.stringify(data));
                         window.location.href = "/signup";
                     } else {

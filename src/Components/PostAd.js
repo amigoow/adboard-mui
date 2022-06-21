@@ -109,7 +109,7 @@ const PostAd = () => {
   console.log (endpoint);
   const getdata = async () => {
     
-    const response = await fetch( endpoint + '/api/Noticeboard/GetUser/?userId='  + token.P_NO);
+    const response = await fetch( endpoint + '/api/Noticeboard/GetUser/?userId='  + token.p_NO);
     setmydata(await response.json());
   }
   
@@ -124,24 +124,24 @@ const PostAd = () => {
 
     const formData = new FormData();
 
-    formData.append("ImageBinary", selectedFile);
-    formData.append("PNumber", currUser.P_NO);
-    formData.append("FeedBackList", null);
-    formData.append("Id", currUser.P_NO);
-    formData.append("AdvertismentDate", null);
+    // formData.append("ImageBinary", selectedFile);
+    formData.append("PNumber", currUser.p_NO);
+    // formData.append("FeedBackList", null);
+    formData.append("Id", currUser.p_NO);
+    formData.append("AdvertismentDate", "12-12-2022");
     formData.append("ExpiryDate", expiryDate.toLocaleDateString("en-US"));
-    formData.append("ExtendedDate", "");
+    formData.append("ExtendedDate", "12-12-2022");
     formData.append("Detail", detail);
     formData.append("EmergencyStatus", AdCategory);
-    formData.append("PublishedStatus", PublishedStatus);
+    formData.append("PublishedStatus", 'C');
     formData.append("OfficialStatus", OfficialStatus);
-    formData.append("CreatedBy", currUser.Name);
-    formData.append("CreatedDate", "");
-    formData.append("UpdateBy", currUser.Name);
-    formData.append("UpdatedDate", "null");
-    formData.append("MainImage", null);
+    formData.append("CreatedBy", currUser.name);
+    formData.append("CreatedDate", "12-12-2022");
+    formData.append("UpdateBy", currUser.name);
+    formData.append("UpdatedDate", "12-12-2022");
+    formData.append("MainImage", selectedFile);
     formData.append("ItemValue", itemValue);
-    formData.append("Images", null);
+    // formData.append("Images", null);
     formData.append("Remarks", detail);
 
     const endpoint = window.api_ip;
@@ -149,7 +149,7 @@ const PostAd = () => {
     try {
       const response = axios({
         method: "post",
-        url: endpoint + "/api/Noticeboard/PostFile",
+        url: endpoint + "/api/Noticeboard/CreateAdvertisment",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -226,7 +226,7 @@ const PostAd = () => {
                   label="P.No#"
                   onChange={(e) => setPnumber(e.target.value)}
                   name="PNumber"
-                  value={currUser.P_NO}
+                  value={currUser.p_NO}
                   disabled
                   InputLabelProps={{
                     shrink: true,
@@ -245,7 +245,7 @@ const PostAd = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value = {currUser.Name}
+                  value = {currUser.name}
                   onChange={(e) => setName(e.target.value)}
                   autoFocus
                   style={{ marginTop: '20px' }}
@@ -322,7 +322,7 @@ const PostAd = () => {
                     shrink: true,
                   }}
                   name="mobileno"
-                  value={currUser.Mobile_No}
+                  value={currUser.mobile_No}
                   style={{ marginTop: '20px' }}
 
 
@@ -339,7 +339,7 @@ const PostAd = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value = {currUser.Email}
+                  value = {currUser.email}
                   style={{ marginTop: '20px' }}
 
                 />

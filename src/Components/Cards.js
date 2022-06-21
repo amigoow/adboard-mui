@@ -88,8 +88,8 @@ function Cards() {
                                 
                                 return (
                                     
-                                    <Grid item xs={12} sm={6} md={4} key={curEle.Id}>
-                                        <Link target="_blank" to={'/card-details/' + curEle.Id} style={{ textDecoration: 'none' }} >
+                                    <Grid item xs={12} sm={6} md={4} key={curEle.id}>
+                                        <Link target="_blank" to={'/card-details/' + curEle.id} style={{ textDecoration: 'none' }} >
                                             <Card className={classes.card}>
                                                 {/* <CardMedia
                                                     
@@ -105,7 +105,8 @@ function Cards() {
                                                     component="img"
                                                    
                                                     alt="The house from the offer."
-                                                    src={`data:image/jpeg;base64,${getImage(curEle.ImageBinary)}`}
+                                                    src={endpoint + curEle.mainImage}
+                                                    // src={`data:image/jpeg;base64,${getImage(curEle.ImageBinary)}`}
                                                 />
 
                                                 {/* Without using Binary Image */}
@@ -123,26 +124,26 @@ function Cards() {
                                                 
                                                 <CardContent className={classes.cardContent}>
                                                     <Typography gutterBottom variant="h5" component="h2">
-                                                        {curEle.Detail}
+                                                        {curEle.detail}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Posted By: </strong>
-                                                        {curEle.CreatedBy}
+                                                        {curEle.createdBy}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Remarks: </strong>
-                                                        {curEle.Remarks}
+                                                        {curEle.remarks}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Item Value: </strong> 
-                                                         {curEle.ItemValue}
+                                                         {curEle.itemValue}
                                                     </Typography>
                                                     <Typography>
                                                         <strong>Date:</strong>
-                                                        <Moment format="DD/MM/YYYY">{curEle.CreatedDate}</Moment>
+                                                        <Moment format="DD/MM/YYYY">{curEle.createdDate}</Moment>
                                                     </Typography>
-                                                    <Avatar alt="curEle.CreatedBy" src="/broken" >
-                                                        {curEle.CreatedBy.charAt(0)}
+                                                    <Avatar alt="curEle.createdBy" src="/broken" >
+                                                        {curEle.createdBy.charAt(0)}
                                                     </Avatar>
                                                 </CardContent>
                                                 <CardActions>
