@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Cards() {
     const [mydata, setmydata] = useState([]);
+
+    console.log(mydata);
      
     const endpoint  = window.api_ip;
     
